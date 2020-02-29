@@ -1,0 +1,5 @@
+rootProject.name = 'kay-netty'
+include 'netty-proto'
+include 'netty-coder'
+include 'netty-grpc'
+

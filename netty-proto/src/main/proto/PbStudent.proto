@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package me.kay.proto;
+
+option java_package = "me.kay.grpc.proto";
+option java_outer_classname = "PbStudent";
+option java_multiple_files = true;
+
+service StudentService {
+    rpc GetStudentById (StudentRequest) returns (StudentResponse) {
+    };
+}
+
+message StudentRequest {
+    int32 student_id = 1;
+}
+
+message StudentResponse {
+    int32 student_id = 1;
+    string student_Name = 2;
+}

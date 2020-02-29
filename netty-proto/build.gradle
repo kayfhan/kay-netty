@@ -1,0 +1,44 @@
+apply plugin: 'com.google.protobuf'
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'io.grpc', name: 'grpc-all', version: '1.27.0'
+    
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-gradle-plugin
+    compile group: 'com.google.protobuf', name: 'protobuf-gradle-plugin', version: '0.8.11'
+    // https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.11.0'
+
+    // Extra me.kay.me.kay.protobuf.proto source files besides the ones residing under "src/main".
+    // 默认编译时查找的proto文件位置："src/main/proto"
+//    protobuf files("lib/protos.tar.gz")
+//    protobuf files("resources/me.kay.me.kay.protobuf.proto/")
+
+    // Extra me.kay.me.kay.protobuf.proto source files for test besides the ones residing under "src/test".
+//    testProtobuf files("lib/protos-test.tar.gz")
+}
+
+protobuf {
+    protoc {
+        // The artifact spec for the Protobuf Compiler
+        artifact = 'com.google.protobuf:protoc:3.11.0'
+    }
+    plugins {
+        // Optional: an artifact spec for a protoc plugin, with "grpc" as
+        // the identifier, which can be referred to in the "plugins"
+        // container of the "generateProtoTasks" closure.
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.27.0'
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet('main')*.plugins {
+            // Apply the "grpc" plugin whose spec is defined above, without
+            // options.  Note the braces cannot be omitted, otherwise the
+            // plugin will not be added. This is because of the implicit way
+            // NamedDomainObjectContainer binds the methods.
+            grpc {}
+        }
+    }
+}
