@@ -7,21 +7,21 @@ import java.io.IOException;
 
 public class GrpcServer {
 
-    private Server server;
+    private static Server server;
 
     private void start(int port) throws IOException {
-        server = ServerBuilder.forPort(port)
+        server = ServerBuilder
+                .forPort(port)
                 .addService(new StudentServiceImpl())
                 .build()
                 .start();
 
-        Runtime.getRuntime().addShutdownHook(new Thread(()->{
-            GrpcServer.this.shutdown();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(GrpcServer::shutdown));
     }
 
-    private void shutdown() {
+    private static void shutdown() {
         if (server != null) {
+            System.out.println("server shutdown normally。");
             server.shutdown();
         }
     }

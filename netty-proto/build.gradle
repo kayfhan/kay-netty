@@ -20,6 +20,8 @@ dependencies {
 }
 
 protobuf {
+    generatedFilesBaseDir = "$projectDir/src/"
+
     protoc {
         // The artifact spec for the Protobuf Compiler
         artifact = 'com.google.protobuf:protoc:3.11.0'
@@ -32,13 +34,31 @@ protobuf {
             artifact = 'io.grpc:protoc-gen-grpc-java:1.27.0'
         }
     }
+
     generateProtoTasks {
-        ofSourceSet('main')*.plugins {
-            // Apply the "grpc" plugin whose spec is defined above, without
-            // options.  Note the braces cannot be omitted, otherwise the
-            // plugin will not be added. This is because of the implicit way
-            // NamedDomainObjectContainer binds the methods.
-            grpc {}
+        all().each { task ->
+            task.builtins {
+                java { outputSubDir = "grpc" }
+            }
+        }
+        all()*.plugins {
+            grpc {
+                outputSubDir = "grpc"
+            }
         }
     }
+//    generateProtoTasks {
+//        ofSourceSet('main')*.plugins {
+//            // Apply the "grpc" plugin whose spec is defined above, without
+//            // options.  Note the braces cannot be omitted, otherwise the
+//            // plugin will not be added. This is because of the implicit way
+//            // NamedDomainObjectContainer binds the methods.
+//            grpc {
+//                outputSubDir = 'grpc'
+//            }
+//            java {
+//                outputSubDir = 'grpc'
+//            }
+//        }
+//    }
 }

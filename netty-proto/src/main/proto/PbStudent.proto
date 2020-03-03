@@ -2,20 +2,45 @@ syntax = "proto3";
 
 package me.kay.proto;
 
-option java_package = "me.kay.grpc.proto";
+option java_package = "me.kay.grpc";
 option java_outer_classname = "PbStudent";
 option java_multiple_files = true;
 
 service StudentService {
-    rpc GetStudentById (StudentRequest) returns (StudentResponse) {
+    rpc GetStudentByName (NameRequest) returns (StudentResponse) {
+    };
+
+    rpc GetStudentByAge (AgeRequest) returns (stream StudentResponse) {
+    };
+
+    rpc GetStudentsWrapperByAge (stream AgeRequest) returns (StudentResponseList) {
+    };
+
+    rpc BiTalk (stream StreamRequest) returns (stream StreamResponse) {
     };
 }
 
-message StudentRequest {
-    int32 student_id = 1;
+message NameRequest {
+    string student_name = 1;
+}
+
+message AgeRequest {
+    int32 student_age = 1;
 }
 
 message StudentResponse {
-    int32 student_id = 1;
+    int32 student_age = 1;
     string student_Name = 2;
+}
+
+message StudentResponseList{
+    repeated StudentResponse studentResponse = 1;
+}
+
+message StreamRequest{
+    string request_info = 1;
+}
+
+message StreamResponse{
+    string request_info = 1;
 }

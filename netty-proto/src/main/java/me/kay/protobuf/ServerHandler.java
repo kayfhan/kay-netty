@@ -2,7 +2,6 @@ package me.kay.protobuf;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import me.kay.protobuf.proto.Transaction;
 
 public class ServerHandler extends SimpleChannelInboundHandler<Transaction> {
     @Override

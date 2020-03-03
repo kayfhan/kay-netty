@@ -2,10 +2,6 @@ package me.kay.protobuf;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import me.kay.protobuf.proto.CreateContract;
-import me.kay.protobuf.proto.Transaction;
-import me.kay.protobuf.proto.Transfer;
-import me.kay.protobuf.proto.TriggerContract;
 
 import java.util.Random;
 
